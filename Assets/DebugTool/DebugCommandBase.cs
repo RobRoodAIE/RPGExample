@@ -6,8 +6,8 @@ using UnityEngine;
 public class DebugCommandBase 
 {
     private string _commandId;
-    private string _commandDescription;
-    private string _commandFormat;
+    private string _commandDescription; //tell us what it is used for
+    private string _commandFormat; //how its displayed in the help table
 
     public string CommandId           {get{return _commandId; } }
     public string CommandDescription  {get{return _commandDescription; } }

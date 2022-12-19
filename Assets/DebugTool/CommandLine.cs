@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DebugController : MonoBehaviour
+public class CommandLine : MonoBehaviour
 {
     bool showConsole;
     bool showHelp;
@@ -22,10 +22,7 @@ public class DebugController : MonoBehaviour
     {
         showConsole = !showConsole;
         //reset showing commands
-        if (!showConsole)
-        {
-            showHelp = false;
-        }
+        showHelp = false;
     }
 
     public void OnReturn(InputValue value)
@@ -33,7 +30,6 @@ public class DebugController : MonoBehaviour
         if (showConsole)
         {
             HandleInput();
-            input = "";
         }
     }
 
@@ -56,7 +52,7 @@ public class DebugController : MonoBehaviour
             RPGController.Instance.SetGold(x);
         });
 
-        HELP = new DebugCommand("help", "Show Commands", "Help", () =>
+        HELP = new DebugCommand("help", "Show Commands", "help", () =>
         {
             showHelp = true; 
         });
@@ -68,7 +64,7 @@ public class DebugController : MonoBehaviour
     }
 
 
-    //for GUI
+    //for GUI scrolling
     Vector2 scroll;
 
     private void OnGUI()
@@ -98,9 +94,9 @@ public class DebugController : MonoBehaviour
             y += 100;  //offset UI U 
         }
 
-        GUI.Box(new Rect(0, y, Screen.width, 30), "");
-        GUI.backgroundColor = new Color(0, 0, 0, 0);
-        input = GUI.TextField(new Rect(10f, y + 5f, Screen.width - 20f, 20f), input);
+        GUI.Box(new Rect(0, y, Screen.width, 30), "");    //Start x, start y, width, height
+        GUI.backgroundColor = Color.cyan;
+        input = GUI.TextField(new Rect(10f, y + 5, Screen.width - 15, 20), input);
     }
 
     /*
@@ -139,6 +135,10 @@ public class DebugController : MonoBehaviour
                     //cast and invoke
                     (commandList[i] as DebugCommand<int>).Invoke(int.Parse(properties[1]));
                 }
+
+
+                //jack's idea
+                input = "";
             }
         }
     }
